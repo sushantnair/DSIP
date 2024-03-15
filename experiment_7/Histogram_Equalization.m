@@ -34,7 +34,7 @@ disp(c)
 
 d = c(256);
 
-fprintf('\nTotal Number of Pixels: %d', d)
+fprintf('\nTotal Number of Pixels before Histogram Equalization: %d', d)
 
 e = zeros(1, 256);
 
@@ -72,12 +72,32 @@ for p = 1 : 1 : row
             if a(p, q) == r
                 g(p, q) = f(r);
             end
-            if g(p, q) == r
-                h(r) = h(r) + 1;
+            %if g(p, q) == r
+            %    h(r) = h(r) + 1;
+            %end
+        end
+    end
+end
+
+for s = 1 : 1 : row
+    for t = 1 : 1 : col
+        for u = 1 : 256
+            if g(s, t) == u
+                h(u) = h(u) + 1;
             end
         end
     end
 end
+
+cumsum = zeros(1, 256);
+
+for v = 1 : 256
+    for w = 1 : v
+        cumsum(v) = cumsum(v) + h(w);
+    end
+end
+
+fprintf('\nTotal Number of Pixels After Histogram Equalization: %d', cumsum(256))
 
 fprintf("\nNumber of Pixels for Each Pixel Value (0 to 255) in Histogram Equalized Image\n")
 disp(h)
